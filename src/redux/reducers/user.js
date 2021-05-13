@@ -12,7 +12,6 @@ const initState = {
 	redirectTo: ''
 }
 export default function setUser(preState=initState, action){
-	console.log(preState, action)
 	const { type, data } = action
 	switch (type) {
 		case AUTH_SUCCESS:

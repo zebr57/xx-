@@ -10,6 +10,7 @@ import {
 	RECEIVE_USER,
 	RESET_USER,
 } from '../actions-type'
+import {getMsgList} from '../../utils/initSocketIO'
 
 const authSuccess = data => ({type: AUTH_SUCCESS, data})
 const errorMsg = data => ({type: ERROR_MSG, data})
@@ -24,6 +25,7 @@ export const register = (user) => {
 		const response = await reqRegister({ username,password,type })
 		const res = response.data
 		if (res.code === 0) {
+			getMsgList(dispath, res.data._id)
 			dispath(authSuccess(res.data))
 		} else {
 			dispath(errorMsg(res.msg))
@@ -36,6 +38,7 @@ export const login = (user) => {
 		const response = await reqLogin(user)
 		const res = response.data
 		if (res.code === 0) {
+			getMsgList(dispath, res.data._id)
 			dispath(authSuccess(res.data))
 		} else {
 			dispath(errorMsg(res.msg))
@@ -60,6 +63,7 @@ export const getUser = (user) => {
 		const response = await reqGetUser(user)
 		const res = response.data
 		if (res.code === 0) {
+			getMsgList(dispath, res.data._id)
 			dispath(receiveUser(res.data))
 		} else {
 			dispath(resetUser(res.msg))

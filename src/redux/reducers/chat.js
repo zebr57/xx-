@@ -11,9 +11,18 @@ export default function chat(state=initChat, action){
 	const { type, data } = action
 	switch (type) {
 		case RECEIVE_MSG_LIST:
-			return	
+			const { users, chatMsgs } = data
+			return	{
+				users,
+				chatMsgs,
+				unReadCount: 0
+			}
 		case RECEIVE_MSG:
-			return
+			const { chatMsg } = data
+			return {
+				users: state.users,
+				chatMsgs: [...state.chatMsgs, chatMsg]
+			}
 		default:
 			return state
 	}
