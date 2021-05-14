@@ -1,10 +1,11 @@
 import {
 	RECEIVE_MSG,
-	RECEIVE_MSG_LIST
+	RECEIVE_MSG_LIST,
+	MSG_READ
 } from '../actions-type'
-// import { reqCharMsgList } from '../../api/index'
+import { reqReadMsg } from '../../api/index'
 import io from 'socket.io-client'
-import {getMsgList} from '../../utils/initSocketIO'
+// import {getMsgList} from '../../utils/initSocketIO'
 /*		
 单例对象
 1. 创建对象之前: 判断对象是否已经存在, 只有不存在才去创建
@@ -19,9 +20,9 @@ import {getMsgList} from '../../utils/initSocketIO'
 // 		})
 // 	}
 // }
-export const receiveMsgList = ({users, chatMsgs}) => ({type: RECEIVE_MSG_LIST, data: {users, chatMsgs}})
+export const receiveMsgList = ({users, chatMsgs, userid}) => ({type: RECEIVE_MSG_LIST, data: {users, chatMsgs, userid}})
 export const receiveMsg = (chatMsg, userid) => ({type: RECEIVE_MSG, data: {chatMsg, userid}})
-const readMsg = ({count, from, to}) => ({type:'', data: {count, from, to}})
+export const msgRead = ({count, from, to}) => ({type:MSG_READ, data: {count, from, to}})
 
 // async function getMsgList(dispath){
 // 	initIO()
@@ -39,5 +40,16 @@ export const sendMsg = ({from, to, content}) => {
 		console.log('客户端发送到后台：',{from, to, content})
 		// initIO()
 		io.socket.emit('sendMsg', {from, to, content})
+	}
+}
+
+export const readMsg = (from,to) =>{
+	return async dispath => {
+		const response = await reqReadMsg(from)
+		const res = response.data
+		if (res.code === 0) {
+			const count = res.data
+			dispath(msgRead({count, from, to}))
+		}
 	}
 }

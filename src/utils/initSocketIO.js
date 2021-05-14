@@ -16,7 +16,7 @@ function initIO(dispath, userid) {
 			//只有chatMsg 是与当前用户相关的消息(发送或收到)， 才去分发同步action保存消息
 			
 			if (chatMsg.chat_id.indexOf(userid) !== -1) {
-				dispath(receiveMsg(chatMsg))
+				dispath(receiveMsg(chatMsg, userid))
 			}
 		})
 	}
@@ -29,6 +29,6 @@ export async function getMsgList(dispath, userid){
 	if (res.code === 0) {
 		const {users, chatMsgs} = res.data
 		//分发同步action
-		dispath(receiveMsgList({users, chatMsgs}))
+		dispath(receiveMsgList({users, chatMsgs, userid}))
 	}
 }

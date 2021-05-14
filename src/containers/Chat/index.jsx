@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { sendMsg } from '../../redux/actions/chat'
+import { sendMsg, readMsg } from '../../redux/actions/chat'
 
 import { NavBar, List, InputItem, Grid, Icon } from 'antd-mobile'
 const Item = List.Item
@@ -24,6 +24,11 @@ class Chat extends Component {
 	componentDidUpdate () {
     window.scrollTo(0, document.body.scrollHeight)
   }
+	componentWillUnmount(){
+		const from = this.props.match.params.userid
+		const to = this.props.user._id
+		this.props.readMsg(from, to)
+	}
 	handleSend = ()=>{
 		//收集数据
 		const from = this.props.user._id
@@ -53,6 +58,7 @@ class Chat extends Component {
 	render() {
 		const { user } = this.props
 		const { users, chatMsgs } = this.props.chat
+		const { isShowEmoji } = this.state
 		const myId = user._id
     if(typeof users === 'undefined') { // 如果还没有获取数据, 直接不做任何显示
       return null
@@ -68,7 +74,7 @@ class Chat extends Component {
 		const myIcon = myHeader ? require(`../../assets/images/${myHeader}.png`).default : null
 		return (
 			<div id='chat-page'>
-				<NavBar
+				<NavBar className='sticky-herader'
 					mode="drak"
 					icon={<Icon type="left" />}
 					onLeftClick={() => {this.props.history.goBack()}}
@@ -76,7 +82,7 @@ class Chat extends Component {
 						<Icon key="1" type="ellipsis" />,
 					]}
 				>{users[targetId].username}</NavBar>
-				<List>
+				<List style={{marginTop:50, marginBottom: isShowEmoji ? 0: 50}}>
 					{
 						msgs.map(msg => {
 							if (targetId === msg.from) {		// 对方发的消息
@@ -101,7 +107,7 @@ class Chat extends Component {
 				
 					
 				</List>
-				<div className=''>
+				<div className={isShowEmoji ? '': 'am-tab-bar'}>
 					<InputItem
 						placeholder='输入点什么...'
 						value={this.state.content}
@@ -133,5 +139,5 @@ class Chat extends Component {
 }
 export default connect(
 	state => ({user: state.user, chat: state.chat}),
-	{sendMsg}
+	{sendMsg, readMsg}
 )(Chat)
