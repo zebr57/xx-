@@ -13,7 +13,6 @@ class UserList extends Component {
 
 	render() {
 		const { userList } = this.props
-		console.log(userList,"userlist")
 		return (
 			<WingBlank style={{marginBottom:50, marginTop:50}}>
 				{
@@ -21,9 +20,9 @@ class UserList extends Component {
 						<div key={user._id}>
 							<WhiteSpace></WhiteSpace>
 							<Card onClick={()=> this.props.history.push(`/chat/${user._id}`)}>
-								<Header title="This is title"
+								<Header title={user.username}
 												thumb={user.header ? require(`../../assets/images/${user.header}.png`).default : '`../../assets/images/头像1.png`'}
-												extra={<span>{user.username}</span>}>
+												extra={<span>This is title</span>}>
 								</Header>
 								<Body>
 									<div>职位:{user.post}</div>

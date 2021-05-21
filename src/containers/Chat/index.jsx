@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { sendMsg, readMsg } from '../../redux/actions/chat'
 
+import ChatMsgItem from '../../components/ChatMsgItem'
 import { NavBar, List, InputItem, Grid, Icon } from 'antd-mobile'
-const Item = List.Item
+// const Item = List.Item
 
 class Chat extends Component {
 	state = {
@@ -72,6 +73,8 @@ class Chat extends Component {
 		const myHeader = users[myId].header
 		const targetIcon = targetHeader ? require(`../../assets/images/${targetHeader}.png`).default : null
 		const myIcon = myHeader ? require(`../../assets/images/${myHeader}.png`).default : null
+
+		const isRight = true
 		return (
 			<div id='chat-page'>
 				<NavBar className='sticky-herader'
@@ -82,32 +85,34 @@ class Chat extends Component {
 						<Icon key="1" type="ellipsis" />,
 					]}
 				>{users[targetId].username}</NavBar>
-				<List style={{marginTop:50, marginBottom: isShowEmoji ? 0: 50}}>
+				<List style={{marginTop:45, marginBottom: isShowEmoji ? 0: 50}}>
 					{
 						msgs.map(msg => {
 							if (targetId === msg.from) {		// 对方发的消息
 								return (
-									<Item
-										key={msg._id}
-										thumb={targetIcon}>
-										{msg.content}
-									</Item>
+									<ChatMsgItem msg={msg} targetIcon={targetIcon} isRight={!isRight} 	key={msg._id}></ChatMsgItem>
+									// <Item
+									// 	key={msg._id}
+									// 	thumb={targetIcon}>
+									// 	{msg.content}
+									// </Item>
 								) 
 							} else {												// 我发的消息
 								return (
-									<Item className='chat-me'
-										key={msg._id}
-										extra={<img alt='touxiang' src={myIcon}></img>}>
-										{msg.content}
-									</Item>
+									<ChatMsgItem msg={msg} targetIcon={myIcon} isRight={isRight} 	key={msg._id}></ChatMsgItem>
+
+									// <Item className='chat-me'
+									// 	key={msg._id}
+									// 	extra={<img alt='touxiang' src={myIcon}></img>}>
+									// 	{msg.content}
+									// </Item>
 								)
 							}
 						})
 					}
-				
-					
 				</List>
-				<div className={isShowEmoji ? '': 'am-tab-bar'}>
+				{/* <div className={isShowEmoji ? '': 'am-tab-bar'}> */}
+				<div className={'am-tab-bar'}>
 					<InputItem
 						placeholder='输入点什么...'
 						value={this.state.content}
@@ -133,6 +138,7 @@ class Chat extends Component {
 					) : null}
 					
 				</div>
+				
 			</div>
 		)
 	}

@@ -9,7 +9,7 @@ import { reqCharMsgList } from '../api/index'
  */
 function initIO(dispath, userid) {
 	if(!io.socket){
-		io.socket = io('ws://localhost:4000', {transports: ['websocket']})
+		io.socket = io('ws://192.168.3.82:4000', {transports: ['websocket']})
 		//监听
 		io.socket.on('receiveMsg', function(chatMsg){
 			console.log('监听消息', chatMsg,chatMsg.chat_id.indexOf(userid) !== -1)

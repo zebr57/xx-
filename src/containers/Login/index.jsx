@@ -9,7 +9,7 @@ import {
 } from 'antd-mobile'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import {login} from '../../redux/actions/user'
+import {login, errorMsg} from '../../redux/actions/user'
 
 import Logo from '../../components/Logo/logo'
 
@@ -18,7 +18,9 @@ class Login extends Component {
 		username: '',
 		password: '',
 	}
-
+	componentDidMount(){
+		this.props.errorMsg('')
+	}
 	handleChange = (name,val)=>{
 			this.setState({
 				[name]: val
@@ -27,7 +29,6 @@ class Login extends Component {
 
 	login = ()=> {
 		this.props.login(this.state)
-		console.log(this.state,'11111111')
 	}
 	toRegister = ()=> {
 		this.props.history.push('/register')
@@ -41,8 +42,12 @@ class Login extends Component {
     }
 		return (
 			<div>
-				<NavBar>hello,world!</NavBar>
+				<NavBar>xx-直聘</NavBar>
+				<WhiteSpace/>
+				<WhiteSpace/>
 				<Logo/>
+				<WhiteSpace/>
+				<WhiteSpace/>
 				<WingBlank>
 					<List>
 						<WhiteSpace/>
@@ -63,5 +68,5 @@ class Login extends Component {
 }
 export default connect(
 	state => ({user:state.user}),
-	{login}
+	{login, errorMsg}
 )(Login)

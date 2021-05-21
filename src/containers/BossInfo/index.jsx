@@ -27,7 +27,6 @@ class BossInfo extends Component {
 		this.setState({[name]: val})
 	}
 	submit =() => {
-		console.log(this.state)
 		this.props.updateUser(this.state)
 	}
 	render() {

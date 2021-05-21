@@ -1,6 +1,6 @@
 import React from 'react'
 
-import logo from './logo.png'
+import logo from './logo192.png'
 import './logo.less'
 
 

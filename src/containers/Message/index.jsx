@@ -26,7 +26,6 @@ const Brief = Item.Brief
 	lastMsgs.sort(function (m1,m2) {							// < 0 m1放前面 = 0 不变， > 0 后面
 		return m2.create_time - m1.create_time
 	})
-	console.log( lastMsgs,"lastMsgs" )
 	return lastMsgs
 	*/
 function getLastMsgList(chatMsgs, userid) {
@@ -54,7 +53,6 @@ function getLastMsgList(chatMsgs, userid) {
 	lastMsgs.sort(function(m1,m2){
 		return m2.create_time - m1.create_time 
 	})
-	console.log(lastMsgs,'lastmsgs')
 	return lastMsgs
 }
 
@@ -63,7 +61,6 @@ class Message extends Component {
 		const { user } = this.props
 		const { chatMsgs, users } = this.props.chat
 		const lastMsgs = getLastMsgList(chatMsgs, user._id)
-		console.log(chatMsgs);
 		return (
 			<div style={{marginTop:50}}>
 				<List className='messges-list'>
@@ -71,7 +68,6 @@ class Message extends Component {
 						lastMsgs.map(msg => {
 							const targetUserId = user._id === msg.to ? msg.from : msg.to
 							const targetUser = users[targetUserId]
-							console.log(targetUser)
 							return (
 								<Item
 									key={msg._id}

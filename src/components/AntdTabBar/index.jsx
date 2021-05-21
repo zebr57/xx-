@@ -17,14 +17,19 @@ class AntdTabBar extends Component {
 		const path = this.props.location.pathname
 		return (
 			<div>
-				<TabBar tabBarPosition="bottom">
+				<TabBar 
+					tabBarPosition="bottom"
+					barTintColor={'#f5f5f5'}
+					tintColor={'#333'}
+					unselectedTintColor={'#888'}
+				>
 					{ navList.map((nav) => {
 						return (
 							<Item key={nav.path}
 									title={nav.text}
 									badge={nav.path==='/message' ? unReadCount : 0}
 									icon={{uri: require(`./images/${nav.icon}.png`).default}}
-									selectedIcon={{uri: require(`./images/${nav.icon}-selected.png`).default}}
+									selectedIcon={{uri: require(`./images/${nav.icon}1.png`).default}}
 									selected={path===nav.path}
 									onPress={() =>{this.props.history.replace(nav.path)}}>
 							</Item>

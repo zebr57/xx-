@@ -23,7 +23,6 @@ export default class HeaderSelection extends Component {
 	handleClick = ({text, icon})=>{
 		this.setState({icon})
 		this.props.setHeader(text)
-		console.log(text,icon,'el')
 	}
 	render() {
 		const { icon } = this.state
